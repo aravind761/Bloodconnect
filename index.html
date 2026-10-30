@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LifeDrop · Give blood, save a life</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="orbs" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
+  <div id="alert" role="alert">
+    <span class="dot"></span>
+    <span>Critical shortage: O− and B− blood needed within 24 hours.</span>
+    <a href="#board">See requests</a>
+    <button type="button" aria-label="Dismiss alert" onclick="this.parentNode.remove()">Dismiss</button>
+  </div>
+
+  <nav>
+    <div class="in2 card">
+      <a class="brand" href="#top">
+        <svg width="20" height="26" viewBox="0 0 100 140" aria-hidden="true">
+          <path d="M50 8C50 8 12 62 12 90a38 38 0 0 0 76 0C88 62 50 8 50 8z" fill="currentColor"/>
+        </svg>
+        LifeDrop
+      </a>
+      <span class="sp"></span>
+      <a class="l" href="#map">Map</a>
+      <a class="l" href="#board">Requests</a>
+      <a class="l" href="#check">Eligibility</a>
+      <a class="l" href="#process">Process</a>
+      <button class="btn sm" id="navAuth" data-auth>Sign in</button>
+    </div>
+  </nav>
+
+  <main id="top">
+    <div class="wrap hero">
+      <div class="blob" data-p=".12" style="width:300px;height:300px;background:rgba(200,32,63,.25);top:40px;left:-60px"></div>
+      <div class="blob" data-p=".25" style="width:260px;height:260px;background:rgba(60,90,170,.22);bottom:0;right:10%"></div>
+
+      <div>
+        <span class="tag s">Safe · Screened · Free to give</span>
+        <h1 style="margin-top:14px">“Your Blood Can Save a Life Today”</h1>
+        <p class="lead">One donation takes about an hour and can help up to three people. Find a nearby centre, check your eligibility, and book a calm, caring visit.</p>
+        <div class="cta">
+          <a class="btn" href="#map">Find a Donation Center</a>
+          <a class="btn ghost" href="#check">Become a Donor</a>
+        </div>
+      </div>
+
+      <div class="stage" aria-label="Rotating 3D blood drop sculpture, drag to spin">
+        <svg class="fb" id="fb" viewBox="0 0 100 140" aria-hidden="true">
+          <path d="M50 8C50 8 12 62 12 90a38 38 0 0 0 76 0C88 62 50 8 50 8z" fill="#9b1230"/>
+        </svg>
+        <canvas id="hero3d"></canvas>
+      </div>
+    </div>
+
+    <section style="padding-top:20px">
+      <div class="wrap grid3">
+        <div class="card pad ctr rv tilt" id="c-units" data-n="48213">
+          <b>0</b>Units donated
+        </div>
+        <div class="card pad ctr rv tilt" id="c-lives" data-n="144639">
+          <b>0</b>Lives supported
+        </div>
+        <div class="card pad ctr rv tilt" id="c-req" data-n="0">
+          <b>0</b>Nearby urgent requests
+        </div>
+      </div>
+      <div class="wrap mute" style="font-size:.85rem;margin-top:10px;text-align:center">Sample data for demonstration.</div>
+    </section>
+
+    <section id="map">
+      <div class="wrap">
+        <h2 class="rv">Donation centers across India</h2>
+        <p class="lead rv">Drag to rotate the map, then tap a pin. Crimson pins have urgent requests.</p>
+        <div class="mapw rv">
+          <div class="card" style="overflow:hidden">
+            <canvas id="map3d" aria-label="3D map of India with donation centers"></canvas>
+            <div class="pad mute" style="padding:10px 20px;font-size:.88rem">
+              <span class="sw u" style="display:inline-block"></span> Urgent request &nbsp;
+              <span class="sw" style="display:inline-block"></span> Donation center
+            </div>
+          </div>
+          <div class="card pad">
+            <div id="info" aria-live="polite"></div>
+            <h3 style="margin-top:14px">All locations</h3>
+            <div id="locs"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="board">
+      <div class="wrap">
+        <h2 class="rv">Blood request board</h2>
+        <p class="lead rv">Hospitals asking for help right now, most urgent first.</p>
+        <div class="chips" id="chips" role="group" aria-label="Filter by blood group"></div>
+        <div class="rq" id="rq"></div>
+      </div>
+    </section>
+
+    <section id="check">
+      <div class="wrap grid2" style="align-items:center">
+        <div class="rv">
+          <h2>Can I donate?</h2>
+          <p class="lead">Four quick, friendly questions. No data is stored and nothing is judged.</p>
+        </div>
+        <div class="card pad rv" id="elig" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="wrap">
+        <h2 class="rv">What to expect</h2>
+        <div class="tl">
+          <div class="card pad hov rv tilt">
+            <div class="n">1</div>
+            <h3>Register</h3>
+            <p class="mute">Create a profile and pick a time that suits you.</p>
+          </div>
+          <div class="card pad hov rv tilt">
+            <div class="n">2</div>
+            <h3>Health Check</h3>
+            <p class="mute">A short private screening with a nurse.</p>
+          </div>
+          <div class="card pad hov rv tilt">
+            <div class="n">3</div>
+            <h3>Donate</h3>
+            <p class="mute">About 10 minutes in a comfortable chair.</p>
+          </div>
+          <div class="card pad hov rv tilt">
+            <div class="n">4</div>
+            <h3>Rest &amp; Refresh</h3>
+            <p class="mute">Enjoy a snack and a drink before you go.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="rv">Stories that keep us going</h2>
+        <div class="grid3">
+          <figure class="card pad rv tilt" style="margin:0">
+            <blockquote class="q" style="margin:0 0 12px">“I was nervous, but the team made it feel like a visit with friends. I go every season now.”</blockquote>
+            <figcaption class="mute">Meera, donor</figcaption>
+          </figure>
+          <figure class="card pad rv tilt" style="margin:0">
+            <blockquote class="q" style="margin:0 0 12px">“Strangers gave my son a second chance after his accident. I will never forget them.”</blockquote>
+            <figcaption class="mute">Daniel, parent of a recipient</figcaption>
+          </figure>
+          <figure class="card pad rv tilt" style="margin:0">
+            <blockquote class="q" style="margin:0 0 12px">“The urgent alert reached me at lunch. By evening I had donated. It felt wonderful.”</blockquote>
+            <figcaption class="mute">Arjun, O− donor</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="me">
+      <div class="wrap">
+        <h2 class="rv">Your donor dashboard</h2>
+        <div id="lock" class="card pad rv">
+          <h3>Sign in to manage your giving</h3>
+          <p class="mute">Book appointments, see your history, collect badges and receive reminders.</p>
+          <button class="btn" data-auth>Sign in securely</button>
+        </div>
+        <div id="dash" class="grid2" hidden>
+          <div class="card pad">
+            <h3 id="hi">Welcome back</h3>
+            <form id="bk">
+              <label for="bc">Donation center</label>
+              <select id="bc"></select>
+              <label for="bd">Date</label>
+              <input id="bd" type="date" required>
+              <label for="bt">Time</label>
+              <select id="bt">
+                <option>09:00</option>
+                <option>11:30</option>
+                <option>14:00</option>
+                <option>16:30</option>
+              </select>
+              <button class="btn" type="submit">Book appointment</button>
+            </form>
+          </div>
+          <div class="card pad">
+            <h3>Upcoming</h3>
+            <ul id="appts">
+              <li class="mute">No appointments yet.</li>
+            </ul>
+            <h3>Donation history</h3>
+            <ul>
+              <li>12 Aug 2026 · Marina Community Blood Centre · Whole blood</li>
+              <li>03 Apr 2026 · Capital Blood Centre · Whole blood</li>
+              <li>15 Dec 2025 · Deccan Mobile Donation Van · Whole blood</li>
+            </ul>
+          </div>
+          <div class="card pad">
+            <h3>Badges</h3>
+            <div>
+              <div class="bd"><span>🩸</span>First Drop<small>Earned</small></div>
+              <div class="bd"><span>💗</span>Life Saver<small>Earned</small></div>
+              <div class="bd off"><span>🔥</span>Steady Hero<small>Locked</small></div>
+            </div>
+          </div>
+          <div class="card pad">
+            <h3>Notifications <span class="tag" id="nc">2 new</span></h3>
+            <ul id="notes">
+              <li>Your next eligible date is open. Book a slot!</li>
+              <li>O− is urgently needed at Riverside Medical Center.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap mute">
+    LifeDrop concept. Sample data only. Eligibility guidance is general; staff confirm at your health check.
+  </footer>
+
+  <dialog id="auth">
+    <form id="af">
+      <h3>Sign in</h3>
+      <p class="mute" style="font-size:.9rem">Demo sign-in. Connect your identity provider before launch.</p>
+      <label for="em">Email</label>
+      <input id="em" type="email" autocomplete="email" required>
+      <label for="pw">Password</label>
+      <input id="pw" type="password" autocomplete="current-password" minlength="6" required>
+      <div style="display:flex;gap:10px">
+        <button class="btn" type="submit">Continue</button>
+        <button class="btn ghost" type="button" onclick="this.closest('dialog').close()">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
