@@ -639,3 +639,43 @@ try {
   requestAnimationFrame(loop);
   jobs.forEach(j => j(t));
 })(0);
+
+/* ---- home page effects ---- */
+(() => {
+  const prog = $('#prog');
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    prog.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  if (RM || !matchMedia('(hover:hover)').matches) return;
+
+  const hero = $('.hero');
+  hero.addEventListener('pointermove', e => {
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    hero.style.setProperty('--sx', (x * 100).toFixed(1) + '%');
+    hero.style.setProperty('--sy', (y * 100).toFixed(1) + '%');
+    hero.style.setProperty('--px', ((x - 0.5) * 2).toFixed(3));
+    hero.style.setProperty('--py', ((y - 0.5) * 2).toFixed(3));
+  }, { passive: true });
+  hero.addEventListener('pointerleave', () => {
+    hero.style.setProperty('--px', 0);
+    hero.style.setProperty('--py', 0);
+  });
+
+  $$('.mag').forEach(b => {
+    b.addEventListener('pointermove', e => {
+      const r = b.getBoundingClientRect();
+      b.style.setProperty('--tx', ((e.clientX - r.left - r.width / 2) * 0.22).toFixed(1) + 'px');
+      b.style.setProperty('--ty', ((e.clientY - r.top - r.height / 2) * 0.32).toFixed(1) + 'px');
+    });
+    b.addEventListener('pointerleave', () => {
+      b.style.setProperty('--tx', '0px');
+      b.style.setProperty('--ty', '0px');
+    });
+  });
+})();
