@@ -3,13 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>LifeDrop · Give blood, save a life</title>
+  <title>BloodConnect · Give blood, save a life</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div id="prog" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
   <div class="orbs" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
   <div id="alert" role="alert">
     <span class="dot"></span>
@@ -24,7 +26,7 @@
         <svg width="20" height="26" viewBox="0 0 100 140" aria-hidden="true">
           <path d="M50 8C50 8 12 62 12 90a38 38 0 0 0 76 0C88 62 50 8 50 8z" fill="currentColor"/>
         </svg>
-        LifeDrop
+        BloodConnect
       </a>
       <span class="sp"></span>
       <a class="l" href="#map">Map</a>
@@ -36,38 +38,62 @@
   </nav>
 
   <main id="top">
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <div class="wrap hero">
-      <div class="blob" data-p=".12" style="width:300px;height:300px;background:rgba(200,32,63,.25);top:40px;left:-60px"></div>
-      <div class="blob" data-p=".25" style="width:260px;height:260px;background:rgba(60,90,170,.22);bottom:0;right:10%"></div>
 
-      <div>
-        <span class="tag s">Safe · Screened · Free to give</span>
-        <h1 style="margin-top:14px">“Your Blood Can Save a Life Today”</h1>
+      <div class="floor" aria-hidden="true"></div>
+
+      <div class="copy">
+        <span class="tag s live"><i class="ld"></i>Safe · Screened · Free to give</span>
+        <h1 aria-label="Your blood can save a life today"><span class="w" aria-hidden="true"><i style="--i:0">“Your</i></span> <span class="w" aria-hidden="true"><i style="--i:1">Blood</i></span> <span class="w" aria-hidden="true"><i style="--i:2">Can</i></span> <span class="w" aria-hidden="true"><i class="grad" style="--i:3">Save</i></span> <span class="w" aria-hidden="true"><i class="grad" style="--i:4">a</i></span> <span class="w" aria-hidden="true"><i class="grad" style="--i:5">Life</i></span> <span class="w" aria-hidden="true"><i style="--i:6">Today”</i></span></h1>
         <p class="lead">One donation takes about an hour and can help up to three people. Find a nearby centre, check your eligibility, and book a calm, caring visit.</p>
+        <svg class="ecg" viewBox="0 0 360 48" aria-hidden="true">
+          <path class="b" pathLength="1" d="M0 26H70L80 26L90 8L102 42L114 14L122 26H190L200 26L208 10L220 40L230 18L236 26H360"/>
+          <path class="a" pathLength="1" d="M0 26H70L80 26L90 8L102 42L114 14L122 26H190L200 26L208 10L220 40L230 18L236 26H360"/>
+        </svg>
         <div class="cta">
-          <a class="btn" href="#map">Find a Donation Center</a>
-          <a class="btn ghost" href="#check">Become a Donor</a>
+          <a class="btn mag" href="#map">Find a Donation Center</a>
+          <a class="btn ghost mag" href="#check">Become a Donor</a>
         </div>
+        <ul class="trust">
+          <li><b>~1 hr</b>per visit</li>
+          <li><b>3</b>lives per donation</li>
+          <li><b>Free</b>to give</li>
+        </ul>
       </div>
 
       <div class="stage" aria-label="Rotating 3D blood drop sculpture, drag to spin">
+        <div class="halo" aria-hidden="true"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
         <svg class="fb" id="fb" viewBox="0 0 100 140" aria-hidden="true">
           <path d="M50 8C50 8 12 62 12 90a38 38 0 0 0 76 0C88 62 50 8 50 8z" fill="#9b1230"/>
         </svg>
         <canvas id="hero3d"></canvas>
+        <div class="fchip c1" style="--d:1.3"><i class="ld"></i><div><b>O− needed</b><small>New Delhi · Critical</small></div></div>
+        <div class="fchip c2" style="--d:-1"><span class="ck">✓</span><div><b>Donor booked</b><small>Chennai · 2 min ago</small></div></div>
+        <div class="fchip c3" style="--d:0.8"><span class="ck">3</span><div><b>Lives per donation</b><small>Up to three people</small></div></div>
+      </div>
+      <a class="cue" href="#impact" aria-label="Scroll down"><i></i><span>Scroll</span></a>
+    </div>
+
+    <div class="marqw" aria-hidden="true">
+      <div class="marqr">
+        <div class="marq">
+          <div class="mt"><b class="bgp">O+</b><span>One donation, up to three lives</span><b class="bgp">O−</b><span>Safe · Screened · Free to give</span><b class="bgp">A+</b><span>Find a center near you</span><b class="bgp">A−</b><span>Rest, refresh, repeat</span><b class="bgp">B+</b><span>One donation, up to three lives</span><b class="bgp">B−</b><span>Safe · Screened · Free to give</span><b class="bgp">AB+</b><span>Find a center near you</span><b class="bgp">AB−</b><span>Rest, refresh, repeat</span></div>
+          <div class="mt"><b class="bgp">O+</b><span>One donation, up to three lives</span><b class="bgp">O−</b><span>Safe · Screened · Free to give</span><b class="bgp">A+</b><span>Find a center near you</span><b class="bgp">A−</b><span>Rest, refresh, repeat</span><b class="bgp">B+</b><span>One donation, up to three lives</span><b class="bgp">B−</b><span>Safe · Screened · Free to give</span><b class="bgp">AB+</b><span>Find a center near you</span><b class="bgp">AB−</b><span>Rest, refresh, repeat</span></div>
+        </div>
       </div>
     </div>
 
-    <section style="padding-top:20px">
+    <section id="impact" style="padding-top:20px">
       <div class="wrap grid3">
         <div class="card pad ctr rv tilt" id="c-units" data-n="48213">
-          <b>0</b>Units donated
+          <span class="ico" aria-hidden="true">🩸</span><b>0</b>Units donated
         </div>
         <div class="card pad ctr rv tilt" id="c-lives" data-n="144639">
-          <b>0</b>Lives supported
+          <span class="ico" aria-hidden="true">💗</span><b>0</b>Lives supported
         </div>
         <div class="card pad ctr rv tilt" id="c-req" data-n="0">
-          <b>0</b>Nearby urgent requests
+          <span class="ico" aria-hidden="true">⚡</span><b>0</b>Nearby urgent requests
         </div>
       </div>
       <div class="wrap mute" style="font-size:.85rem;margin-top:10px;text-align:center">Sample data for demonstration.</div>
@@ -220,7 +246,7 @@
   </main>
 
   <footer class="wrap mute">
-    LifeDrop concept. Sample data only. Eligibility guidance is general; staff confirm at your health check.
+    BloodConnect concept. Sample data only. Eligibility guidance is general; staff confirm at your health check.
   </footer>
 
   <dialog id="auth">
