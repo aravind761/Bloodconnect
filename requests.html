@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Live Blood Request Board &amp; Emergency SOS · BloodConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('bc_theme');
+        if (theme) document.documentElement.setAttribute('data-theme', theme);
+        const fs = localStorage.getItem('bc_font_size');
+        if (fs) document.documentElement.setAttribute('data-font-size', fs);
+        const cont = localStorage.getItem('bc_contrast');
+        if (cont) document.documentElement.setAttribute('data-contrast', cont);
+        const mot = localStorage.getItem('bc_motion');
+        if (mot) document.documentElement.setAttribute('data-motion', mot);
+      } catch (e) {}
+      document.documentElement.classList.add('js');
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to requests</a>
+
+  <div id="prog" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="orbs" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="in2 card">
+      <a class="brand" href="index.html">
+        <svg width="20" height="26" viewBox="0 0 100 140" aria-hidden="true">
+          <path d="M50 8C50 8 12 62 12 90a38 38 0 0 0 76 0C88 62 50 8 50 8z" fill="currentColor"/>
+        </svg>
+        BloodConnect
+      </a>
+      <span class="sp"></span>
+      <a class="l" href="index.html">Home</a>
+      <a class="l" href="tools.html">Tools</a>
+      <a class="l" href="centers.html">Centers &amp; Map</a>
+      <a class="l active" href="requests.html">Urgent Requests</a>
+      <a class="l" href="eligibility.html">Eligibility</a>
+      <a class="l" href="about.html">About</a>
+      <div class="nav-actions">
+        <button class="nav-search-btn" id="navSearchBtn" aria-label="Search" title="Search palette (Ctrl + K)">
+          <span>🔍</span><span class="txt">Search</span><kbd>Ctrl K</kbd>
+        </button>
+        <button class="nav-icon-btn" id="navSettingsBtn" aria-label="Settings" title="Accessibility &amp; Settings">⚙️</button>
+        <button class="btn-sos" id="navSosBtn" aria-label="Emergency SOS numbers" title="24/7 Helpline">🚨 SOS</button>
+        <a class="btn sm" href="dashboard.html" id="navAuth">Donor Portal</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" style="padding-top:20px;padding-bottom:70px">
+    <div class="wrap">
+      <div class="page-header rv">
+        <span class="tag s live"><i class="ld"></i>Real-Time Emergency Dispatch</span>
+        <h1>Live Blood Request Board</h1>
+        <p class="lead">Critical and urgent transfusion requirements posted by verified medical centers. Respond directly or broadcast to your community.</p>
+      </div>
+
+      <!-- BROADCAST BANNER -->
+      <div class="card pad rv" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px;margin-bottom:28px;background:linear-gradient(135deg, rgba(200,32,63,0.18), var(--glass))">
+        <div>
+          <h3 style="margin:0 0 4px">Need Blood Urgently for an ICU Patient?</h3>
+          <p class="mute" style="margin:0;font-size:.9rem">Submit an emergency request to broadcast alerts to registered donors in your area and receive direct coordinator callbacks.</p>
+        </div>
+        <button class="btn" id="btnBoardPostRequest" style="box-shadow:0 6px 20px rgba(155,18,48,0.4)">+ Post Urgent Request</button>
+      </div>
+
+      <!-- BOARD TOOLBAR & SEARCH -->
+      <div class="board-toolbar rv">
+        <div class="chips" id="chips" role="group" aria-label="Filter by blood group"></div>
+        <div class="board-search">
+          <input type="text" id="boardSearchInput" placeholder="Search hospital, city or patient...">
+        </div>
+      </div>
+
+      <!-- DYNAMIC BLOOD REQUESTS GRID -->
+      <div class="rq" id="rq"></div>
+
+      <!-- 24/7 EMERGENCY HELPLINES ACCORDION -->
+      <section style="margin-top:48px">
+        <h2 style="margin-bottom:18px">24/7 National Emergency Blood Directory</h2>
+        <div class="grid3" style="gap:16px">
+          <div class="card pad">
+            <span style="font-size:1.8rem">📞</span>
+            <h3 style="margin:8px 0 4px">1910 · NBTC Blood Hotline</h3>
+            <p class="mute" style="font-size:.86rem;margin-bottom:14px">Central government round-the-clock helpline for blood availability queries across state blood transfusion councils.</p>
+            <a class="btn sm" href="tel:1910">Call 1910</a>
+          </div>
+
+          <div class="card pad">
+            <span style="font-size:1.8rem">🏥</span>
+            <h3 style="margin:8px 0 4px">104 · National Health Line</h3>
+            <p class="mute" style="font-size:.86rem;margin-bottom:14px">Medical helpline providing directory routing to nearest government blood banks and district civil hospitals.</p>
+            <a class="btn sm" href="tel:104">Call 104</a>
+          </div>
+
+          <div class="card pad">
+            <span style="font-size:1.8rem">🚑</span>
+            <h3 style="margin:8px 0 4px">108 · Emergency Response</h3>
+            <p class="mute" style="font-size:.86rem;margin-bottom:14px">Immediate medical and trauma ambulance dispatch for accident emergencies and acute blood loss triage.</p>
+            <a class="btn sm" href="tel:108">Call 108</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- PROFESSIONAL FOOTER -->
+  <footer class="wrap mute" style="padding:48px 20px 80px;border-top:1px solid var(--bd)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px">
+      <div>
+        <b style="color:var(--cr);font-size:1.05rem">BloodConnect Emergency Telemetry</b>
+        <p style="margin:4px 0 0;font-size:.85rem">All requests undergo verification by attending hospital blood coordinators.</p>
+      </div>
+      <div style="display:flex;gap:18px;font-size:.88rem">
+        <a href="index.html" style="color:inherit">Home</a>
+        <a href="tools.html" style="color:inherit">Clinical Tools</a>
+        <a href="centers.html" style="color:inherit">Centers &amp; Map</a>
+        <a href="eligibility.html" style="color:inherit">Eligibility</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING QUICK DOCK & MODALS -->
+  <div class="quick-dock" id="quickDock">
+    <div class="dock-menu" id="dockMenu">
+      <button class="dock-btn" id="dockBtnSettings">⚙️ Website Settings</button>
+      <button class="dock-btn" id="dockBtnTools" onclick="location.href='tools.html'">🩸 Clinical Tools</button>
+      <button class="dock-btn" id="dockBtnSearch">🔍 Search (Ctrl+K)</button>
+      <button class="dock-btn" id="dockBtnSos" style="color:#d32f2f">🚨 Emergency SOS</button>
+      <button class="dock-btn" id="dockBtnSound">🔊 Sound Effects: <span id="dockSoundStatus">ON</span></button>
+    </div>
+    <button class="dock-toggle" id="dockToggle" aria-label="Quick tools" title="Quick Tools Menu">⚡</button>
+  </div>
+
+  <!-- POST REQUEST MODAL -->
+  <dialog id="postRequestModal" class="modal-wide">
+    <form id="formPostRequest">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <h3 style="margin:0">🚨 Broadcast Urgent Blood Request</h3>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">✕</button>
+      </div>
+      <p class="mute" style="font-size:.88rem;margin-bottom:16px">This broadcast alerts verified registered donors in the city and publishes directly to the live request board.</p>
+
+      <div class="grid2" style="gap:12px">
+        <div>
+          <label for="reqPatient">Patient Name / Case ID</label>
+          <input id="reqPatient" type="text" placeholder="e.g. Priya Sharma (ICU-402)" required>
+        </div>
+        <div>
+          <label for="reqBloodGroup">Blood Group Required</label>
+          <select id="reqBloodGroup" required>
+            <option value="O−">O− (Critical Shortage)</option>
+            <option value="O+">O+</option>
+            <option value="A−">A−</option>
+            <option value="A+">A+</option>
+            <option value="B−">B−</option>
+            <option value="B+">B+</option>
+            <option value="AB−">AB−</option>
+            <option value="AB+">AB+</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid2" style="gap:12px">
+        <div>
+          <label for="reqUnits">Units Needed</label>
+          <input id="reqUnits" type="number" min="1" max="10" value="2" required>
+        </div>
+        <div>
+          <label for="reqUrgency">Urgency Level</label>
+          <select id="reqUrgency">
+            <option value="Critical">● Critical (Needed within 6 hrs)</option>
+            <option value="Urgent">▲ Urgent (Needed within 24 hrs)</option>
+            <option value="Soon">○ Soon (Needed within 48 hrs)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid2" style="gap:12px">
+        <div>
+          <label for="reqHospital">Hospital / Medical Center</label>
+          <input id="reqHospital" type="text" placeholder="e.g. Apollo Hospital / AIIMS" required>
+        </div>
+        <div>
+          <label for="reqCity">City &amp; State</label>
+          <input id="reqCity" type="text" placeholder="e.g. New Delhi · Delhi" required>
+        </div>
+      </div>
+
+      <div class="grid2" style="gap:12px">
+        <div>
+          <label for="reqPhone">Attendant Contact Number</label>
+          <input id="reqPhone" type="tel" placeholder="+91 98765 43210" required>
+        </div>
+        <div>
+          <label for="reqReason">Clinical Indication</label>
+          <select id="reqReason">
+            <option>Emergency Surgery</option>
+            <option>Accident / Trauma Care</option>
+            <option>Thalassemia / Hematology</option>
+            <option>Maternity &amp; Childbirth</option>
+            <option>Oncology Treatment</option>
+            <option>Other Urgent Need</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn" type="submit" style="flex:1">Publish Emergency Request</button>
+        <button class="btn ghost" type="button" onclick="this.closest('dialog').close()">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- SHAREABLE EMERGENCY CARD MODAL -->
+  <dialog id="emergencyCardModal" class="modal-compact">
+    <div style="text-align:center">
+      <span style="font-size:3rem">📢</span>
+      <h3 style="margin:8px 0 4px">Urgent Request Published!</h3>
+      <p class="mute" style="font-size:.88rem">Your emergency broadcast is live on the Blood Board. Share this card to WhatsApp groups and social networks to mobilize donors immediately.</p>
+      <div id="emergencyCardPreview" style="background:var(--chip);border:1px solid var(--bd);border-radius:16px;padding:16px;text-align:left;margin:16px 0"></div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn" id="btnShareWhatsApp" style="background:#25d366;color:#fff">💬 Share to WhatsApp</button>
+        <button class="btn ghost" id="btnShareTwitter">🐦 Share to X / Twitter</button>
+        <button class="btn ghost" id="btnCopyEmergencyText">📋 Copy Full SOS Message</button>
+        <button class="btn ghost" type="button" onclick="this.closest('dialog').close()">Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="commandPalette">
+    <div class="cmd-head">
+      <span>🔍</span>
+      <input type="text" class="cmd-input" id="cmdInput" placeholder="Type to search..." autocomplete="off">
+      <kbd style="font-size:.75rem;padding:2px 6px;border:1px solid var(--bd);border-radius:4px">ESC</kbd>
+    </div>
+    <div class="cmd-list" id="cmdList"></div>
+  </dialog>
+
+  <dialog id="sosModal" class="modal-compact">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;color:#d32f2f">🚨 Emergency Blood Helplines</h3>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">✕</button>
+      </div>
+      <p class="mute" style="font-size:.88rem;margin-bottom:16px">Official 24/7 blood transfusion hotlines. Tap to dial directly.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <a href="tel:1910" class="card pad" style="display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--ink);padding:14px 18px">
+          <div><b style="display:block;font-size:1.1rem">1910</b><small class="mute">National Blood Transfusion Council</small></div>
+          <span class="btn sm">📞 Call 1910</span>
+        </a>
+        <a href="tel:104" class="card pad" style="display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--ink);padding:14px 18px">
+          <div><b style="display:block;font-size:1.1rem">104</b><small class="mute">National Health Helpline</small></div>
+          <span class="btn sm">📞 Call 104</span>
+        </a>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="siteSettingsModal" class="modal-compact">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <h3 style="margin:0">⚙️ Settings &amp; Accessibility</h3>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">✕</button>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:block;margin-bottom:6px">Theme</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px" id="themeGroup">
+          <button class="chip" data-theme-btn="auto">Auto System</button>
+          <button class="chip" data-theme-btn="light">☀️ Light</button>
+          <button class="chip" data-theme-btn="dark">🌙 Dark</button>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:block;margin-bottom:6px">Text Size</label>
+        <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:8px" id="fontGroup">
+          <button class="chip" data-fs="sm">A-</button>
+          <button class="chip" data-fs="md">A</button>
+          <button class="chip" data-fs="lg">A+</button>
+          <button class="chip" data-fs="xl">A++</button>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+          <div><b>High Contrast Mode</b><small class="mute" style="display:block">Enhanced contrast borders</small></div>
+          <input type="checkbox" id="toggleHighContrast" style="width:20px;height:20px;margin:0">
+        </label>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+          <div><b>Sound Effects</b><small class="mute" style="display:block">Audio feedback for actions</small></div>
+          <input type="checkbox" id="toggleSoundFx" checked style="width:20px;height:20px;margin:0">
+        </label>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button class="btn sm" id="btnResetSettings" type="button" style="flex:1">Reset Defaults</button>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+
+  <script src="Script.js"></script>
+  <script>
+    // Auto-open post request dialog if ?post=1 in URL
+    if (new URLSearchParams(window.location.search).get('post') === '1') {
+      setTimeout(() => {
+        const d = document.getElementById('postRequestModal');
+        if (d) d.showModal();
+      }, 300);
+    }
+  </script>
+</body>
+</html>

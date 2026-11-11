@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BloodConnect · Real-Time Blood Donation, Tools & Emergency Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('bc_theme');
+        if (theme) document.documentElement.setAttribute('data-theme', theme);
+        const fs = localStorage.getItem('bc_font_size');
+        if (fs) document.documentElement.setAttribute('data-font-size', fs);
+        const cont = localStorage.getItem('bc_contrast');
+        if (cont) document.documentElement.setAttribute('data-contrast', cont);
+        const mot = localStorage.getItem('bc_motion');
+        if (mot) document.documentElement.setAttribute('data-motion', mot);
+      } catch (e) {}
+      document.documentElement.classList.add('js');
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#top">Skip to main content</a>
+  <a class="skip-link" href="#tools-preview">Skip to medical tools</a>
+  <a class="skip-link" href="#requests-preview">Skip to urgent requests</a>
+
+  <div id="prog" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="orbs" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
+
+  <!-- URGENT SHORTAGE ALERT BAR -->
+  <div id="alert" role="alert">
+    <span class="dot"></span>
+    <span id="alertText">Critical shortage: O− and B− blood needed within 24 hours across emergency centers.</span>
+    <a href="requests.html" style="font-weight:600">See all requests</a>
+    <div class="alert-actions">
+      <button type="button" class="alert-btn" id="alertTtsBtn" title="Read alert aloud" aria-label="Read alert aloud">🔊 Read</button>
+      <button type="button" class="alert-btn" id="alertShareBtn" title="Share urgent alert to WhatsApp" aria-label="Share alert">↗ Share</button>
+      <button type="button" class="alert-btn" aria-label="Dismiss alert" onclick="this.closest('#alert').remove()">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- GLOBAL NAVIGATION -->
+  <nav>
+    <div class="in2 card">
+      <a class="brand" href="index.html">
+        <svg width="20" height="26" viewBox="0 0 100 140" aria-hidden="true">
+          <path d="M50 8C50 8 12 62 12 90a38 38 0 0 0 76 0C88 62 50 8 50 8z" fill="currentColor"/>
+        </svg>
+        BloodConnect
+      </a>
+      <span class="sp"></span>
+      <a class="l active" href="index.html">Home</a>
+      <a class="l" href="tools.html">Tools</a>
+      <a class="l" href="centers.html">Centers &amp; Map</a>
+      <a class="l" href="requests.html">Urgent Requests</a>
+      <a class="l" href="eligibility.html">Eligibility</a>
+      <a class="l" href="about.html">About</a>
+      <div class="nav-actions">
+        <button class="nav-search-btn" id="navSearchBtn" aria-label="Search blood groups, centers, and tools" title="Search palette (Ctrl + K)">
+          <span>🔍</span><span class="txt">Search</span><kbd>Ctrl K</kbd>
+        </button>
+        <button class="nav-icon-btn" id="navSettingsBtn" aria-label="Website settings & accessibility" title="Accessibility & Display Controls">⚙️</button>
+        <button class="btn-sos" id="navSosBtn" aria-label="Emergency SOS numbers" title="24/7 Emergency Blood Helpline">🚨 SOS</button>
+        <a class="btn sm" href="dashboard.html" id="navAuth">Donor Portal</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <!-- HERO SECTION -->
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="wrap hero">
+      <div class="floor" aria-hidden="true"></div>
+
+      <div class="copy">
+        <span class="tag s live"><i class="ld"></i>Safe · Screened · Free to give</span>
+        <h1 aria-label="Your blood can save a life today">
+          <span class="w" aria-hidden="true"><i style="--i:0">“Your</i></span>
+          <span class="w" aria-hidden="true"><i style="--i:1">Blood</i></span>
+          <span class="w" aria-hidden="true"><i style="--i:2">Can</i></span>
+          <span class="w" aria-hidden="true"><i class="grad" style="--i:3">Save</i></span>
+          <span class="w" aria-hidden="true"><i class="grad" style="--i:4">a</i></span>
+          <span class="w" aria-hidden="true"><i class="grad" style="--i:5">Life</i></span>
+          <span class="w" aria-hidden="true"><i style="--i:6">Today”</i></span>
+        </h1>
+        <p class="lead">One standard donation takes about an hour and can support up to three patients in emergency care, surgeries, and cancer therapies. Explore nearby centres, calculate your clinical compatibility, or respond to an urgent hospital request.</p>
+        
+        <svg class="ecg" viewBox="0 0 360 48" aria-hidden="true">
+          <path class="b" pathLength="1" d="M0 26H70L80 26L90 8L102 42L114 14L122 26H190L200 26L208 10L220 40L230 18L236 26H360"/>
+          <path class="a" pathLength="1" d="M0 26H70L80 26L90 8L102 42L114 14L122 26H190L200 26L208 10L220 40L230 18L236 26H360"/>
+        </svg>
+
+        <div class="cta">
+          <a class="btn mag" href="centers.html">Find a Donation Center</a>
+          <a class="btn ghost mag" href="tools.html">Clinical Tools Suite</a>
+          <a class="btn ghost mag" href="requests.html" style="border-color:var(--cr);color:var(--cr)">+ Post Urgent Request</a>
+        </div>
+
+        <ul class="trust">
+          <li><b>~1 hr</b>per visit</li>
+          <li><b>3</b>lives supported</li>
+          <li><b>Free</b>to give</li>
+          <li><b>100%</b>screened</li>
+        </ul>
+      </div>
+
+      <!-- 3D SCULPTURE STAGE -->
+      <div class="stage" aria-label="Rotating 3D blood drop sculpture, drag to spin">
+        <div class="halo" aria-hidden="true"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
+        <svg class="fb" id="fb" viewBox="0 0 100 140" aria-hidden="true">
+          <path d="M50 8C50 8 12 62 12 90a38 38 0 0 0 76 0C88 62 50 8 50 8z" fill="#9b1230"/>
+        </svg>
+        <canvas id="hero3d"></canvas>
+        <div class="fchip c1" style="--d:1.3"><i class="ld"></i><div><b>O− needed</b><small>New Delhi · Critical</small></div></div>
+        <div class="fchip c2" style="--d:-1"><span class="ck">✓</span><div><b>Donor booked</b><small>Chennai · 2 min ago</small></div></div>
+        <div class="fchip c3" style="--d:0.8"><span class="ck">3</span><div><b>Lives per donation</b><small>Up to three people</small></div></div>
+      </div>
+      <a class="cue" href="#impact" aria-label="Scroll down"><i></i><span>Scroll</span></a>
+    </div>
+
+    <!-- TICKER MARQUEE -->
+    <div class="marqw" aria-hidden="true">
+      <div class="marqr">
+        <div class="marq">
+          <div class="mt"><b class="bgp">O+</b><span>Most requested blood type</span><b class="bgp">O−</b><span>Universal red cell donor</span><b class="bgp">A+</b><span>Over 40% population eligible</span><b class="bgp">A−</b><span>Vital for emergency surgeries</span><b class="bgp">B+</b><span>Essential regional support</span><b class="bgp">B−</b><span>Rare type in high demand</span><b class="bgp">AB+</b><span>Universal red cell recipient</span><b class="bgp">AB−</b><span>Universal plasma donor</span></div>
+          <div class="mt"><b class="bgp">O+</b><span>Most requested blood type</span><b class="bgp">O−</b><span>Universal red cell donor</span><b class="bgp">A+</b><span>Over 40% population eligible</span><b class="bgp">A−</b><span>Vital for emergency surgeries</span><b class="bgp">B+</b><span>Essential regional support</span><b class="bgp">B−</b><span>Rare type in high demand</span><b class="bgp">AB+</b><span>Universal red cell recipient</span><b class="bgp">AB−</b><span>Universal plasma donor</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE TELEMETRY IMPACT COUNTERS -->
+    <section id="impact" style="padding-top:28px">
+      <div class="wrap grid3">
+        <div class="card pad ctr rv tilt" id="c-units" data-n="48213">
+          <span class="ico" aria-hidden="true">🩸</span><b>0</b>Units donated
+        </div>
+        <div class="card pad ctr rv tilt" id="c-lives" data-n="144639">
+          <span class="ico" aria-hidden="true">💗</span><b>0</b>Lives supported
+        </div>
+        <div class="card pad ctr rv tilt" id="c-req" data-n="8">
+          <span class="ico" aria-hidden="true">⚡</span><b>0</b>Active urgent requests
+        </div>
+      </div>
+      <div class="wrap mute" style="font-size:.85rem;margin-top:12px;text-align:center">
+        Live regional telemetry across accredited national hospital and blood center networks.
+      </div>
+    </section>
+
+    <!-- SECTION: CLINICAL TOOLS PREVIEW -->
+    <section id="tools-preview">
+      <div class="wrap">
+        <div class="rv" style="text-align:center;max-width:44em;margin:0 auto 36px">
+          <span class="tag s live"><i class="ld"></i>Interactive Medical Suite</span>
+          <h2>Clinical &amp; Donor Tools</h2>
+          <p class="lead">Built-in clinical decision tools, compatibility explorers, deferral calculators, and live reserve telemetry.</p>
+        </div>
+
+        <div class="grid2" style="gap:20px">
+          <div class="card pad hov tilt feature-card rv">
+            <div>
+              <span class="feature-icon">🩸</span>
+              <h3>Transfusion Compatibility Explorer</h3>
+              <p class="mute">Interactive explorer for Whole Blood (Red Cells) and Plasma/Platelets. Learn who can safely receive your blood and who you can receive from across all 8 blood groups.</p>
+            </div>
+            <div style="margin-top:18px">
+              <a class="btn sm" href="tools.html#tool-compat">Launch Compatibility Tool →</a>
+            </div>
+          </div>
+
+          <div class="card pad hov tilt feature-card rv">
+            <div>
+              <span class="feature-icon">📅</span>
+              <h3>Next Eligible Date &amp; Calendar Sync</h3>
+              <p class="mute">Calculates your exact donation eligibility date by component (Whole blood, Platelets, Plasma) with an animated readiness gauge and one-click <b>.ics Calendar Export</b>.</p>
+            </div>
+            <div style="margin-top:18px">
+              <a class="btn sm" href="tools.html#tool-calc">Calculate Eligibility Date →</a>
+            </div>
+          </div>
+
+          <div class="card pad hov tilt feature-card rv">
+            <div>
+              <span class="feature-icon">⚖️</span>
+              <h3>Nadler's Blood Volume Estimator</h3>
+              <p class="mute">Calculates your circulating blood volume based on clinical height and weight parameters. Verifies that a 450 mL donation stays safely below 13% of circulating volume.</p>
+            </div>
+            <div style="margin-top:18px">
+              <a class="btn sm" href="tools.html#tool-volume">Estimate Blood Volume →</a>
+            </div>
+          </div>
+
+          <div class="card pad hov tilt feature-card rv">
+            <div>
+              <span class="feature-icon">📊</span>
+              <h3>Live Blood Bank Inventory Radar</h3>
+              <p class="mute">Real-time aggregate stock levels across regional centers with critical shortage alerts, capacity bars, and direct pledge routing for critically low blood reserves.</p>
+            </div>
+            <div style="margin-top:18px">
+              <a class="btn sm" href="tools.html#tool-inventory">View Live Radar →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: LIVE REQUESTS SPOTLIGHT -->
+    <section id="requests-preview" style="background:linear-gradient(180deg, transparent, rgba(200,32,63,0.05), transparent)">
+      <div class="wrap">
+        <div class="rv" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:28px">
+          <div>
+            <h2>Urgent Blood Requests Spotlight</h2>
+            <p class="lead" style="margin:0">Patients in critical care requiring emergency blood within 6 to 24 hours.</p>
+          </div>
+          <a class="btn" href="requests.html">View All Requests (8) →</a>
+        </div>
+
+        <div class="grid3" style="gap:18px">
+          <article class="card pad hov tilt rv" style="display:flex;flex-direction:column;justify-content:space-between">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div class="bg">O−</div>
+                <span class="tag"><i class="pulse-dot"></i>● Critical</span>
+              </div>
+              <h3 style="margin-top:12px">Capital Blood Centre</h3>
+              <p class="mute" style="font-size:.9rem;margin-bottom:6px">New Delhi · Delhi</p>
+              <p style="font-weight:700;font-size:1.15rem;color:var(--cr);margin-bottom:8px">4 units needed</p>
+              <p class="mute" style="font-size:.82rem">Patient: <b>Ananya R.</b> · Emergency Cardiac Surgery</p>
+            </div>
+            <div style="margin-top:16px;display:flex;gap:8px">
+              <a class="btn sm" href="tel:+919810012345">📞 Call</a>
+              <a class="btn sm ghost" href="requests.html">Details →</a>
+            </div>
+          </article>
+
+          <article class="card pad hov tilt rv" style="display:flex;flex-direction:column;justify-content:space-between">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div class="bg">B−</div>
+                <span class="tag"><i class="pulse-dot"></i>● Critical</span>
+              </div>
+              <h3 style="margin-top:12px">Harbour City Blood Bank</h3>
+              <p class="mute" style="font-size:.9rem;margin-bottom:6px">Mumbai · Maharashtra</p>
+              <p style="font-weight:700;font-size:1.15rem;color:var(--cr);margin-bottom:8px">2 units needed</p>
+              <p class="mute" style="font-size:.82rem">Patient: <b>Rahul M.</b> · Accident Trauma Care</p>
+            </div>
+            <div style="margin-top:16px;display:flex;gap:8px">
+              <a class="btn sm" href="tel:+919820023456">📞 Call</a>
+              <a class="btn sm ghost" href="requests.html">Details →</a>
+            </div>
+          </article>
+
+          <article class="card pad hov tilt rv" style="display:flex;flex-direction:column;justify-content:space-between">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div class="bg">A+</div>
+                <span class="tag">▲ Urgent</span>
+              </div>
+              <h3 style="margin-top:12px">Eastern Riverside Hospital</h3>
+              <p class="mute" style="font-size:.9rem;margin-bottom:6px">Kolkata · West Bengal</p>
+              <p style="font-weight:700;font-size:1.15rem;color:var(--cr);margin-bottom:8px">3 units needed</p>
+              <p class="mute" style="font-size:.82rem">Patient: <b>Subhash B.</b> · Thalassemia Support</p>
+            </div>
+            <div style="margin-top:16px;display:flex;gap:8px">
+              <a class="btn sm" href="tel:+919830034567">📞 Call</a>
+              <a class="btn sm ghost" href="requests.html">Details →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: HOW IT WORKS / WHAT TO EXPECT -->
+    <section id="process">
+      <div class="wrap">
+        <div class="rv" style="text-align:center;max-width:40em;margin:0 auto 34px">
+          <h2>The 4-Step Donation Journey</h2>
+          <p class="lead">Safe, sterile, and guided by accredited medical staff every step of the way.</p>
+        </div>
+        <div class="tl">
+          <div class="card pad hov rv tilt">
+            <div class="n">1</div>
+            <h3>Book or Walk In</h3>
+            <p class="mute">Pick a verified donation center and reserve a convenient 15-minute arrival slot.</p>
+          </div>
+          <div class="card pad hov rv tilt">
+            <div class="n">2</div>
+            <h3>Health Screening</h3>
+            <p class="mute">A short private check of your hemoglobin, blood pressure, pulse, and temperature.</p>
+          </div>
+          <div class="card pad hov rv tilt">
+            <div class="n">3</div>
+            <h3>Safe Donation</h3>
+            <p class="mute">Relax in a contoured reclining chair. The actual collection takes only 8–10 minutes.</p>
+          </div>
+          <div class="card pad hov rv tilt">
+            <div class="n">4</div>
+            <h3>Rest &amp; Refresh</h3>
+            <p class="mute">Enjoy fresh juice, cookies, and receive your digital donor badge and certificate.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: INSPIRING TESTIMONIALS -->
+    <section>
+      <div class="wrap">
+        <h2 class="rv" style="text-align:center;margin-bottom:32px">Stories of Hope &amp; Courage</h2>
+        <div class="grid3">
+          <figure class="card pad rv tilt" style="margin:0">
+            <blockquote class="q" style="margin:0 0 14px">“I was nervous my first time, but the nurses were so gentle. Knowing my single donation helped save three cancer patients keeps me coming back every three months.”</blockquote>
+            <figcaption class="mute"><b>Meera</b> · Regular Donor (14 Donations)</figcaption>
+          </figure>
+          <figure class="card pad rv tilt" style="margin:0">
+            <blockquote class="q" style="margin:0 0 14px">“When my son met with an accident, strangers on BloodConnect responded within 90 minutes. I will remain eternally grateful to the anonymous heroes who saved his life.”</blockquote>
+            <figcaption class="mute"><b>Daniel</b> · Parent of Recipient</figcaption>
+          </figure>
+          <figure class="card pad rv tilt" style="margin:0">
+            <blockquote class="q" style="margin:0 0 14px">“The emergency SMS alert popped up during my lunch break. As an O negative donor, I knew my blood was urgently required. By evening, the units were delivered to ICU.”</blockquote>
+            <figcaption class="mute"><b>Arjun</b> · O− Universal Donor (8 Donations)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="wrap">
+      <div class="cta-banner rv">
+        <h2>Ready to Save Lives in Your Community?</h2>
+        <p class="lead" style="margin:0 auto 24px">Every two seconds, someone in India needs blood. Step up today and join a nationwide community of lifesavers.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center">
+          <a class="btn mag" href="centers.html">Locate Nearest Blood Centre</a>
+          <a class="btn ghost mag" href="eligibility.html">Check My Eligibility (2 min)</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PROFESSIONAL FOOTER -->
+  <footer class="wrap mute" style="padding:48px 20px 80px">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:32px;margin-bottom:32px;border-bottom:1px solid var(--bd);padding-bottom:32px">
+      <div>
+        <div class="brand" style="margin-bottom:10px">
+          <svg width="20" height="26" viewBox="0 0 100 140" aria-hidden="true">
+            <path d="M50 8C50 8 12 62 12 90a38 38 0 0 0 76 0C88 62 50 8 50 8z" fill="currentColor"/>
+          </svg>
+          BloodConnect
+        </div>
+        <p style="font-size:.88rem;line-height:1.6;margin-bottom:14px">
+          Empowering communities and medical networks to ensure no emergency patient waits for life-saving blood. Fully compliant with National Blood Transfusion Council guidelines.
+        </p>
+        <div style="font-size:.82rem">
+          <span style="display:inline-block;margin-right:12px">🛡️ ISO 9001 Certified</span>
+          <span>🔒 Encrypted Patient Data</span>
+        </div>
+      </div>
+
+      <div>
+        <b style="color:var(--ink);display:block;margin-bottom:12px">Explore</b>
+        <ul style="font-size:.88rem;line-height:2">
+          <li><a href="index.html" style="color:inherit;text-decoration:none">Home</a></li>
+          <li><a href="tools.html" style="color:inherit;text-decoration:none">Clinical Tools</a></li>
+          <li><a href="centers.html" style="color:inherit;text-decoration:none">Centers &amp; 3D Map</a></li>
+          <li><a href="requests.html" style="color:inherit;text-decoration:none">Urgent Requests</a></li>
+          <li><a href="eligibility.html" style="color:inherit;text-decoration:none">Eligibility Quiz</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <b style="color:var(--ink);display:block;margin-bottom:12px">Portals</b>
+        <ul style="font-size:.88rem;line-height:2">
+          <li><a href="dashboard.html" style="color:inherit;text-decoration:none">Donor Portal</a></li>
+          <li><a href="dashboard.html" style="color:inherit;text-decoration:none">Digital Donor Pass</a></li>
+          <li><a href="about.html" style="color:inherit;text-decoration:none">About Us</a></li>
+          <li><a href="#feedbackModal" id="footerFeedbackLink" style="color:inherit;text-decoration:none">Submit Feedback</a></li>
+          <li><a href="#siteSettingsModal" id="footerSettingsLink" style="color:inherit;text-decoration:none">Accessibility Controls</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <b style="color:var(--cr);display:block;margin-bottom:12px">24/7 Emergency Helplines</b>
+        <p style="font-size:.88rem;margin-bottom:8px">National emergency lines (Tap to dial):</p>
+        <p style="font-size:1.1rem;font-weight:700;color:var(--ink);margin:0 0 4px">📞 1910 <small class="mute" style="font-size:.8rem;font-weight:400">(NBTC Blood)</small></p>
+        <p style="font-size:1.1rem;font-weight:700;color:var(--ink);margin:0 0 4px">📞 104 <small class="mute" style="font-size:.8rem;font-weight:400">(National Health)</small></p>
+        <p style="font-size:1.1rem;font-weight:700;color:var(--ink);margin:0 0 12px">📞 108 <small class="mute" style="font-size:.8rem;font-weight:400">(Trauma / Ambulance)</small></p>
+        <button class="btn sm" id="footerSosBtn" style="width:100%;background:#d32f2f">🚨 Open Emergency SOS</button>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;font-size:.82rem">
+      <div>
+        &copy; 2026 BloodConnect Network. Dedicated to saving lives through voluntary donation.
+      </div>
+      <div style="display:flex;gap:18px">
+        <a href="#cookieBanner" id="footerCookiesLink" style="color:inherit">Cookie Preferences</a>
+        <a href="about.html" style="color:inherit">Privacy Policy</a>
+        <a href="about.html" style="color:inherit">Clinical Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING QUICK DOCK -->
+  <div class="quick-dock" id="quickDock">
+    <div class="dock-menu" id="dockMenu">
+      <button class="dock-btn" id="dockBtnSettings">⚙️ Website Settings</button>
+      <button class="dock-btn" id="dockBtnTools" onclick="location.href='tools.html'">🩸 Clinical Tools</button>
+      <button class="dock-btn" id="dockBtnSearch">🔍 Search (Ctrl+K)</button>
+      <button class="dock-btn" id="dockBtnSos" style="color:#d32f2f">🚨 Emergency SOS</button>
+      <button class="dock-btn" id="dockBtnSound">🔊 Sound Effects: <span id="dockSoundStatus">ON</span></button>
+    </div>
+    <button class="dock-toggle" id="dockToggle" aria-label="Quick tools and controls" title="Quick Tools &amp; Settings Menu">⚡</button>
+  </div>
+
+  <!-- PERSISTENT DIALOGS & MODALS -->
+  <dialog id="commandPalette">
+    <div class="cmd-head">
+      <span>🔍</span>
+      <input type="text" class="cmd-input" id="cmdInput" placeholder="Type to search centers, blood types, tools, or shortcuts..." autocomplete="off">
+      <kbd style="font-size:.75rem;padding:2px 6px;border:1px solid var(--bd);border-radius:4px">ESC</kbd>
+    </div>
+    <div class="cmd-list" id="cmdList"></div>
+  </dialog>
+
+  <dialog id="sosModal" class="modal-compact">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;color:#d32f2f">🚨 Emergency Blood Helplines</h3>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">✕</button>
+      </div>
+      <p class="mute" style="font-size:.88rem;margin-bottom:16px">Official government &amp; Red Cross 24/7 blood transfusion hotlines. Tap to dial directly.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <a href="tel:1910" class="card pad" style="display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--ink);padding:14px 18px">
+          <div><b style="display:block;font-size:1.1rem">1910</b><small class="mute">National Blood Transfusion Council (NBTC)</small></div>
+          <span class="btn sm">📞 Call 1910</span>
+        </a>
+        <a href="tel:104" class="card pad" style="display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--ink);padding:14px 18px">
+          <div><b style="display:block;font-size:1.1rem">104</b><small class="mute">National Health &amp; Blood Helpline</small></div>
+          <span class="btn sm">📞 Call 104</span>
+        </a>
+        <a href="tel:108" class="card pad" style="display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--ink);padding:14px 18px">
+          <div><b style="display:block;font-size:1.1rem">108</b><small class="mute">Emergency Medical &amp; Trauma Response</small></div>
+          <span class="btn sm">📞 Call 108</span>
+        </a>
+        <a href="tel:+911123716441" class="card pad" style="display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--ink);padding:14px 18px">
+          <div><b style="display:block;font-size:1rem">Indian Red Cross HQ</b><small class="mute">+91 11 2371 6441 (National HQ)</small></div>
+          <span class="btn sm ghost">📞 Call</span>
+        </a>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="siteSettingsModal" class="modal-compact">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <h3 style="margin:0">⚙️ Website Controls &amp; Accessibility</h3>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">✕</button>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:block;margin-bottom:6px">Appearance &amp; Theme</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px" id="themeGroup">
+          <button class="chip" data-theme-btn="auto">Auto System</button>
+          <button class="chip" data-theme-btn="light">☀️ Light</button>
+          <button class="chip" data-theme-btn="dark">🌙 Dark</button>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:block;margin-bottom:6px">Text Size Scaling (WCAG AAA)</label>
+        <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:8px" id="fontGroup">
+          <button class="chip" data-fs="sm">A- (90%)</button>
+          <button class="chip" data-fs="md">A (100%)</button>
+          <button class="chip" data-fs="lg">A+ (115%)</button>
+          <button class="chip" data-fs="xl">A++ (130%)</button>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+          <div><b>High Contrast Mode</b><small class="mute" style="display:block">Enhanced borders &amp; deep contrast colors</small></div>
+          <input type="checkbox" id="toggleHighContrast" style="width:20px;height:20px;margin:0">
+        </label>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+          <div><b>Pause 3D &amp; Motion</b><small class="mute" style="display:block">Stops Three.js rotation &amp; parallax</small></div>
+          <input type="checkbox" id="togglePauseMotion" style="width:20px;height:20px;margin:0">
+        </label>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+          <div><b>Audio Feedback (Web Audio)</b><small class="mute" style="display:block">Acoustic chimes for actions &amp; alerts</small></div>
+          <input type="checkbox" id="toggleSoundFx" checked style="width:20px;height:20px;margin:0">
+        </label>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button class="btn sm" id="btnResetSettings" type="button" style="flex:1">Reset Defaults</button>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="feedbackModal" class="modal-compact">
+    <form id="formFeedback">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0">💬 Share Your Feedback</h3>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">✕</button>
+      </div>
+      <p class="mute" style="font-size:.88rem">Help us improve BloodConnect for patients and donors.</p>
+      <label>Your Experience Rating</label>
+      <div style="display:flex;gap:10px;font-size:1.8rem;cursor:pointer;margin-bottom:12px" id="feedbackStars">
+        <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+      </div>
+      <label for="fbTopic">Category</label>
+      <select id="fbTopic">
+        <option>Donation Centre Visit Experience</option>
+        <option>Blood Board / Request Usability</option>
+        <option>Clinical Tools &amp; Calculators</option>
+        <option>Accessibility or Display Issue</option>
+        <option>Feature Suggestion</option>
+      </select>
+      <label for="fbMsg">Message</label>
+      <textarea id="fbMsg" rows="3" style="width:100%;font:inherit;padding:10px;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--ink);resize:vertical" placeholder="Tell us what you liked or how we can improve..." required></textarea>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="btn sm" type="submit" style="flex:1">Submit Feedback</button>
+        <button class="btn sm ghost" type="button" onclick="this.closest('dialog').close()">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="cookieBanner" role="dialog" aria-label="Privacy &amp; Cookie Preferences">
+    <div style="flex:1;min-width:280px">
+      <b style="display:block;margin-bottom:4px">Privacy &amp; Telemetry Notice</b>
+      <small class="mute" style="font-size:.84rem;line-height:1.4;display:block">
+        We use essential local storage to remember your accessibility controls, donor appointments, and nearby urgent emergency shortage alerts.
+      </small>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button class="btn sm" id="btnAcceptCookies">Accept All</button>
+      <button class="btn sm ghost" id="btnEssentialCookies">Essential Only</button>
+    </div>
+  </div>
+
+  <div id="toast" role="status"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="Script.js"></script>
+</body>
+</html>
